@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Chats{% endblock %} · Seguimiento de chats</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<div class="frame">
+  <aside class="side">
+    <a class="brand" href="/">
+      {% include "_mark.html" %}
+      <span>Seguimiento<br>de chats</span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="/" {% if active == "board" %}aria-current="page"{% endif %}>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="2.5" width="3.4" height="11" rx="1"/><rect x="6.3" y="2.5" width="3.4" height="7" rx="1"/><rect x="10.6" y="2.5" width="3.4" height="9" rx="1"/></svg>
+        Chats
+      </a>
+      <a href="/numbers" {% if active == "numbers" %}aria-current="page"{% endif %}>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4.5" y="1.5" width="7" height="13" rx="1.6"/><path d="M7 12.2h2"/></svg>
+        Números
+      </a>
+    </nav>
+    <div class="side-foot">
+      <span class="who">{{ account.name or account.email }}</span>
+      <span class="scope">Cuenta de WhatsApp</span>
+      <form method="post" action="/logout"><button class="link" type="submit">Salir</button></form>
+    </div>
+  </aside>
+  <main class="sheet">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% block scripts %}{% endblock %}
+</body>
+</html>

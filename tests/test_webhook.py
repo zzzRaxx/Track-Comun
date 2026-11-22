@@ -10,7 +10,7 @@ TOKEN = "token-de-prueba"  # el mismo que fija conftest.py
 
 @pytest.fixture
 def client(tmp_path):
-    app = create_app(f"sqlite:///{tmp_path / 'w.db'}", validate=False)
+    app = create_app(f"sqlite:///{tmp_path / 'w.db'}", validate=False, run_analysis=False)
     with TestClient(app) as c:
         with session_scope(app.state.session_factory) as s:
             acc = Account(email="a@b.c", password_hash="x")

@@ -4,7 +4,10 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse, Response
+from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
+
+from pathlib import Path
 
 from app import config
 from app.channels import webhook
@@ -30,6 +33,7 @@ def create_app(
             config.validate()
         engine = make_engine(database_url or config.DATABASE_URL)
         init_db(engine)
+        logging.getLogger(__name__).info("Base de datos: %s", engine.dialect.name)
         app.state.engine = engine
         app.state.session_factory = make_session_factory(engine)
         owns_client = evolution is None and bool(config.EVOLUTION_URL)
@@ -62,6 +66,7 @@ def create_app(
     async def _not_logged_in(request: Request, exc: routes.NotLoggedIn):
         return RedirectResponse("/login", status_code=303)
 
+    app.mount("/static", StaticFiles(directory=str(Path(__file__).parent / "web" / "static")), name="static")
     app.include_router(webhook.router)
     app.include_router(routes.router)
 

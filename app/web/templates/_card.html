@@ -1,0 +1,52 @@
+{% if c.column == "personal" %}
+<article class="cardk personal" tabindex="0" role="button" aria-expanded="false" data-id="{{ c.id }}" data-column="personal" aria-label="{{ c.name }}, chat personal">
+  <div class="top">
+    <span class="name">{{ c.name }}</span>
+    <span class="chip">No se guarda</span>
+  </div>
+  <div class="foot">
+    <div class="acts">
+      <button type="button" class="go plain" data-include>Volver a incluir</button>
+    </div>
+  </div>
+</article>
+{% else %}
+<article class="cardk{{ ' waiting' if c.unanswered }}{{ ' overdue' if c.overdue }}" draggable="true" tabindex="0" role="button" aria-expanded="false"
+         data-id="{{ c.id }}" data-column="{{ c.column }}" aria-label="{{ c.name }}">
+  <div class="top">
+    <span class="name">{{ c.name }}</span>
+    <span class="ago">{{ c.last_ago }}</span>
+  </div>
+  {% if c.last_text %}<div class="bubble{{ '' if c.last_from_client else ' mine' }}">{{ c.last_text }}</div>{% endif %}
+  {% if c.summary %}<p class="summary">{{ c.summary }}</p>{% endif %}
+  {% if c.unanswered or c.follow_up or c.amount %}
+  <div class="chips">
+    {% if c.unanswered %}<span class="chip warn">Espera respuesta</span>{% endif %}
+    {% if c.follow_up %}
+      <span class="chip{{ ' bad' if c.overdue }}">{{ "Cita" if c.column == "cita_agendada" else ("Seguimiento vencido" if c.overdue else ("Entrega" if c.column == "vendida" else "Seguimiento")) }} · {{ c.follow_up }}</span>
+    {% endif %}
+    {% if c.amount %}<span class="chip good">{{ c.amount }}</span>{% endif %}
+  </div>
+  {% endif %}
+  <div class="foot">
+    {% if not c.confirmed and c.suggested %}
+    <div class="suggest">
+      <span>IA sugiere <b>{{ c.suggested_label }}</b></span>
+      <button type="button" data-confirm="{{ c.suggested }}">Confirmar</button>
+    </div>
+    {% endif %}
+    <div class="acts">
+      {% if c.chat_url %}
+      <a class="go" href="{{ c.chat_url }}" target="_blank" rel="noopener noreferrer" aria-label="Ir al chat de {{ c.name }} en WhatsApp">
+        Ir al chat
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M5.5 3H13v7.5M13 3 3.5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      {% else %}<span></span>{% endif %}
+      <button type="button" class="mv" data-move aria-haspopup="menu" aria-expanded="false" aria-label="Mover {{ c.name }} a otro estado">
+        Mover
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</article>
+{% endif %}

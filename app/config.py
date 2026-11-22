@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Sin DATABASE_URL solo se usa SQLite en desarrollo; validate() la exige al arrancar el servicio.
+DATABASE_URL_DEFINED = bool(os.getenv("DATABASE_URL"))
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./data/app.db")
 
 # Evolution API (solo accesible por la red privada de Railway)
@@ -25,6 +27,8 @@ GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 GEMINI_FALLBACK_MODEL = os.getenv("GEMINI_FALLBACK_MODEL", "gemini-2.5-flash-lite")
 
 TZ_NAME = os.getenv("TZ", "UTC")
+# Moneda que se muestra junto a los montos de las ventas
+CURRENCY = os.getenv("CURRENCY", "Bs")
 SILENCE_MINUTES = int(os.getenv("SILENCE_MINUTES", "10"))
 REMINDER_INTERVAL_MIN = int(os.getenv("REMINDER_INTERVAL_MIN", "15"))
 REMINDER_COOLDOWN_MIN = int(os.getenv("REMINDER_COOLDOWN_MIN", "120"))
@@ -41,6 +45,7 @@ def validate() -> None:
     missing = [
         n
         for n, v in (
+            ("DATABASE_URL", "x" if DATABASE_URL_DEFINED else ""),
             ("EVOLUTION_URL", EVOLUTION_URL),
             ("EVOLUTION_API_KEY", EVOLUTION_API_KEY),
             ("WEBHOOK_TOKEN", WEBHOOK_TOKEN),

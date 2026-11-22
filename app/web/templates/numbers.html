@@ -1,0 +1,38 @@
+{% extends "shell.html" %}
+{% block title %}Números{% endblock %}
+{% block content %}
+<div class="sheet-in">
+  <div class="title-row">
+    <div>
+      <h1>Números</h1>
+      <p class="sub">Cada número conectado guarda sus chats para clasificarlos.</p>
+    </div>
+    {% if rows|length < max_connections %}
+    <div class="title-actions"><a class="btn small" href="/connections/new">Conectar WhatsApp</a></div>
+    {% endif %}
+  </div>
+
+  {% if rows %}
+  <div class="card list">
+    {% for r in rows %}
+    <div class="row">
+      <div>
+        <a href="/connections/{{ r.conn.id }}"><strong>+{{ r.conn.phone }}</strong></a>
+        <div class="muted num">{{ r.conversations }} conversaciones · {{ r.messages }} mensajes</div>
+      </div>
+      <div class="row" style="gap:12px">
+        <span class="badge {{ r.conn.state }}">{{ STATE_LABELS[r.conn.state] }}</span>
+        {% if r.conn.state != "open" %}<a class="btn secondary small" href="/connections/{{ r.conn.id }}">Reconectar</a>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <strong>Aún no has conectado ningún número.</strong>
+    <p>Vincúlalo con un código, igual que «Dispositivos vinculados» en WhatsApp. Sigues usando WhatsApp en tu teléfono sin cambios.</p>
+    <a class="btn" href="/connections/new">Conectar WhatsApp</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

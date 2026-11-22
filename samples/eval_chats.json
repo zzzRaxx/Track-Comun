@@ -1,36 +1,670 @@
 [
-  {"id": "v1", "expected": "vendida", "chat": [["cliente", "Quiero 2 cajas de miel de 500g"], ["negocio", "Son 160 Bs en total"], ["cliente", "Listo, ya hice la transferencia"], ["cliente", "[imagen] comprobante"], ["negocio", "Recibido, mañana te las despachamos"]]},
-  {"id": "v2", "expected": "vendida", "chat": [["cliente", "¿Tienen las zapatillas negras en talla 40?"], ["negocio", "Sí, a 350 Bs"], ["cliente", "Me las llevo, pago contra entrega"], ["negocio", "Perfecto, mañana las llevamos a tu casa"]]},
-  {"id": "v3", "expected": "vendida", "chat": [["cliente", "Sí, contrato el plan de internet de 100 Mb"], ["negocio", "Genial, te envío el contrato"], ["cliente", "[documento] contrato firmado.pdf"], ["negocio", "Recibido, bienvenido"]]},
-  {"id": "v4", "expected": "vendida", "chat": [["cliente", "Me inscribo al curso de Excel"], ["negocio", "Son 300 Bs"], ["cliente", "Pagué por QR"], ["cliente", "[imagen] comprobante de pago"], ["negocio", "Inscrita, bienvenida al curso"]]},
-  {"id": "v5", "expected": "vendida", "chat": [["cliente", "¿Tienen filtro de aceite para Honda 150?"], ["negocio", "Sí, 45 Bs cada uno"], ["cliente", "Dame dos, ya pagué los 90 Bs por Tigo Money"], ["negocio", "Confirmado, pasa a recogerlos"]]},
-  {"id": "v6", "expected": "vendida", "chat": [["cliente", "Quiero una torta de chocolate para el sábado"], ["negocio", "Son 220 Bs, con adelanto del 50%"], ["cliente", "Te deposité 110 Bs"], ["cliente", "[imagen] depósito"], ["negocio", "Recibido, tu pedido queda confirmado"]]},
-
-  {"id": "c1", "expected": "cita_agendada", "chat": [["cliente", "Quiero una limpieza dental"], ["negocio", "Tenemos el martes 24 a las 15:00"], ["cliente", "Perfecto, ahí estaré"]]},
-  {"id": "c2", "expected": "cita_agendada", "chat": [["cliente", "Me interesa el departamento de la calle Bolívar"], ["negocio", "Puede verlo el sábado 28 a las 10:00"], ["cliente", "Sí, nos vemos ese día"]]},
-  {"id": "c3", "expected": "cita_agendada", "chat": [["cliente", "Quisiera cotizar una página web"], ["negocio", "¿Agendamos una llamada mañana a las 11?"], ["cliente", "Dale, mañana a las 11"]]},
-  {"id": "c4", "expected": "cita_agendada", "chat": [["cliente", "Mi perro tiene vómitos desde ayer"], ["negocio", "Tráigalo hoy a las 17:00"], ["cliente", "Voy a esa hora"]]},
-  {"id": "c5", "expected": "cita_agendada", "chat": [["cliente", "Quiero corte y tinte"], ["negocio", "El jueves 26 a las 9:30, ¿le sirve?"], ["cliente", "Sí, anótame"]]},
-  {"id": "c6", "expected": "cita_agendada", "chat": [["cliente", "Necesito revisar los frenos de mi auto"], ["negocio", "Puede traerlo el lunes 23 a las 8:00"], ["cliente", "Allí estaré"], ["negocio", "Lo esperamos"]]},
-
-  {"id": "p1", "expected": "pendiente_seguimiento", "chat": [["cliente", "¿Cuánto cuesta el sistema de riego para media hectárea?"], ["negocio", "Te envío la cotización hoy"], ["cliente", "Ok, quedo atento"]]},
-  {"id": "p2", "expected": "pendiente_seguimiento", "chat": [["negocio", "El plan básico cuesta 120 Bs al mes"], ["cliente", "Lo voy a pensar y te aviso"], ["negocio", "Claro, quedo atento"]]},
-  {"id": "p3", "expected": "pendiente_seguimiento", "chat": [["cliente", "Hola, buenas tardes"], ["cliente", "¿Tienen el modelo azul en talla M?"]]},
-  {"id": "p4", "expected": "pendiente_seguimiento", "chat": [["negocio", "Te paso el catálogo de uniformes"], ["negocio", "[documento] catalogo.pdf"], ["cliente", "Gracias, el lunes te confirmo cuántas unidades necesito"]]},
-  {"id": "p5", "expected": "pendiente_seguimiento", "chat": [["cliente", "Mi pedido no llegó y ya pasaron 5 días"], ["negocio", "Lamento eso, voy a revisar con logística y te escribo"]]},
-  {"id": "p6", "expected": "pendiente_seguimiento", "chat": [["cliente", "¿Me hacen descuento si compro 10 unidades?"], ["negocio", "Lo consulto con mi jefe y te respondo"]]},
-  {"id": "p7", "expected": "pendiente_seguimiento", "chat": [["cliente", "Me interesa el paquete de 3 sesiones"], ["negocio", "Son 450 Bs"], ["cliente", "Mañana te transfiero"], ["negocio", "Ok, te espero"]]},
-
-  {"id": "r1", "expected": "resuelta", "chat": [["cliente", "¿A qué hora abren los sábados?"], ["negocio", "De 9:00 a 13:00"], ["cliente", "Gracias"]]},
-  {"id": "r2", "expected": "resuelta", "chat": [["cliente", "¿Dónde están ubicados?"], ["negocio", "En la Av. Bolívar 45, frente a la plaza"], ["cliente", "Perfecto, gracias"]]},
-  {"id": "r3", "expected": "resuelta", "chat": [["cliente", "Me cobraron doble en mi última factura"], ["negocio", "Ya hicimos el reembolso, verás el crédito en 48 horas"], ["cliente", "Ya lo veo reflejado, muchas gracias"]]},
-  {"id": "r4", "expected": "resuelta", "chat": [["cliente", "¿Aceptan pago con tarjeta?"], ["negocio", "Sí, Visa y Mastercard"], ["cliente", "Ok, muchas gracias"]]},
-  {"id": "r5", "expected": "resuelta", "chat": [["cliente", "No me abre la aplicación"], ["negocio", "Pruebe desinstalarla y volver a instalarla"], ["cliente", "Ya funcionó, gracias"]]},
-  {"id": "r6", "expected": "resuelta", "chat": [["cliente", "¿Hacen envíos a Cochabamba?"], ["negocio", "Sí, cuesta 25 Bs"], ["cliente", "Entendido, gracias por la información"]]},
-
-  {"id": "l1", "expected": "perdida", "chat": [["negocio", "El servicio completo cuesta 900 Bs"], ["cliente", "Es muy caro, ya no me interesa"]]},
-  {"id": "l2", "expected": "perdida", "chat": [["negocio", "Te mando la propuesta final"], ["cliente", "Encontré otra empresa más barata, gracias de todos modos"]]},
-  {"id": "l3", "expected": "perdida", "chat": [["negocio", "¿Pudo revisar la cotización?"], ["cliente", "Ya no necesito el servicio, cancelen la cotización por favor"]]},
-  {"id": "l4", "expected": "perdida", "chat": [["negocio", "Hola, le escribo por la promoción de seguros"], ["cliente", "No me interesa, por favor no me escriban más"]]},
-  {"id": "l5", "expected": "perdida", "chat": [["cliente", "¿Cuánto cuesta el curso de inglés?"], ["negocio", "Son 400 Bs al mes"], ["cliente", "Decidí no tomarlo, gracias"]]}
+ {
+  "id": "v1",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "Quiero 2 cajas de miel de 500g"
+   ],
+   [
+    "negocio",
+    "Son 160 Bs en total"
+   ],
+   [
+    "cliente",
+    "Listo, ya hice la transferencia"
+   ],
+   [
+    "cliente",
+    "[imagen] comprobante"
+   ],
+   [
+    "negocio",
+    "Recibido, mañana te las despachamos"
+   ]
+  ]
+ },
+ {
+  "id": "v2",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "¿Tienen las zapatillas negras en talla 40?"
+   ],
+   [
+    "negocio",
+    "Sí, a 350 Bs"
+   ],
+   [
+    "cliente",
+    "Me las llevo, pago contra entrega"
+   ],
+   [
+    "negocio",
+    "Perfecto, mañana las llevamos a tu casa"
+   ]
+  ]
+ },
+ {
+  "id": "v3",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "Sí, contrato el plan de internet de 100 Mb"
+   ],
+   [
+    "negocio",
+    "Genial, te envío el contrato"
+   ],
+   [
+    "cliente",
+    "[documento] contrato firmado.pdf"
+   ],
+   [
+    "negocio",
+    "Recibido, bienvenido"
+   ]
+  ]
+ },
+ {
+  "id": "v4",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "Me inscribo al curso de Excel"
+   ],
+   [
+    "negocio",
+    "Son 300 Bs"
+   ],
+   [
+    "cliente",
+    "Pagué por QR"
+   ],
+   [
+    "cliente",
+    "[imagen] comprobante de pago"
+   ],
+   [
+    "negocio",
+    "Inscrita, bienvenida al curso"
+   ]
+  ]
+ },
+ {
+  "id": "v5",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "¿Tienen filtro de aceite para Honda 150?"
+   ],
+   [
+    "negocio",
+    "Sí, 45 Bs cada uno"
+   ],
+   [
+    "cliente",
+    "Dame dos, ya pagué los 90 Bs por Tigo Money"
+   ],
+   [
+    "negocio",
+    "Confirmado, pasa a recogerlos"
+   ]
+  ]
+ },
+ {
+  "id": "v6",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "Quiero una torta de chocolate para el sábado"
+   ],
+   [
+    "negocio",
+    "Son 220 Bs, con adelanto del 50%"
+   ],
+   [
+    "cliente",
+    "Te deposité 110 Bs"
+   ],
+   [
+    "cliente",
+    "[imagen] depósito"
+   ],
+   [
+    "negocio",
+    "Recibido, tu pedido queda confirmado"
+   ]
+  ]
+ },
+ {
+  "id": "c1",
+  "expected": "cita_agendada",
+  "chat": [
+   [
+    "cliente",
+    "Quiero una limpieza dental"
+   ],
+   [
+    "negocio",
+    "Tenemos el martes 24 a las 15:00"
+   ],
+   [
+    "cliente",
+    "Perfecto, ahí estaré"
+   ]
+  ]
+ },
+ {
+  "id": "c2",
+  "expected": "cita_agendada",
+  "chat": [
+   [
+    "cliente",
+    "Me interesa el departamento de la calle Bolívar"
+   ],
+   [
+    "negocio",
+    "Puede verlo el sábado 28 a las 10:00"
+   ],
+   [
+    "cliente",
+    "Sí, nos vemos ese día"
+   ]
+  ]
+ },
+ {
+  "id": "c3",
+  "expected": "cita_agendada",
+  "chat": [
+   [
+    "cliente",
+    "Quisiera cotizar una página web"
+   ],
+   [
+    "negocio",
+    "¿Agendamos una llamada mañana a las 11?"
+   ],
+   [
+    "cliente",
+    "Dale, mañana a las 11"
+   ]
+  ]
+ },
+ {
+  "id": "c4",
+  "expected": "cita_agendada",
+  "chat": [
+   [
+    "cliente",
+    "Mi perro tiene vómitos desde ayer"
+   ],
+   [
+    "negocio",
+    "Tráigalo hoy a las 17:00"
+   ],
+   [
+    "cliente",
+    "Voy a esa hora"
+   ]
+  ]
+ },
+ {
+  "id": "c5",
+  "expected": "cita_agendada",
+  "chat": [
+   [
+    "cliente",
+    "Quiero corte y tinte"
+   ],
+   [
+    "negocio",
+    "El jueves 26 a las 9:30, ¿le sirve?"
+   ],
+   [
+    "cliente",
+    "Sí, anótame"
+   ]
+  ]
+ },
+ {
+  "id": "c6",
+  "expected": "cita_agendada",
+  "chat": [
+   [
+    "cliente",
+    "Necesito revisar los frenos de mi auto"
+   ],
+   [
+    "negocio",
+    "Puede traerlo el lunes 23 a las 8:00"
+   ],
+   [
+    "cliente",
+    "Allí estaré"
+   ],
+   [
+    "negocio",
+    "Lo esperamos"
+   ]
+  ]
+ },
+ {
+  "id": "p1",
+  "expected": "pendiente_seguimiento",
+  "chat": [
+   [
+    "cliente",
+    "¿Cuánto cuesta el sistema de riego para media hectárea?"
+   ],
+   [
+    "negocio",
+    "Te envío la cotización hoy"
+   ],
+   [
+    "cliente",
+    "Ok, quedo atento"
+   ]
+  ]
+ },
+ {
+  "id": "p2",
+  "expected": "pendiente_seguimiento",
+  "chat": [
+   [
+    "negocio",
+    "El plan básico cuesta 120 Bs al mes"
+   ],
+   [
+    "cliente",
+    "Lo voy a pensar y te aviso"
+   ],
+   [
+    "negocio",
+    "Claro, quedo atento"
+   ]
+  ]
+ },
+ {
+  "id": "p3",
+  "expected": "pendiente_seguimiento",
+  "chat": [
+   [
+    "cliente",
+    "Hola, buenas tardes"
+   ],
+   [
+    "cliente",
+    "¿Tienen el modelo azul en talla M?"
+   ]
+  ]
+ },
+ {
+  "id": "p4",
+  "expected": "pendiente_seguimiento",
+  "chat": [
+   [
+    "negocio",
+    "Te paso el catálogo de uniformes"
+   ],
+   [
+    "negocio",
+    "[documento] catalogo.pdf"
+   ],
+   [
+    "cliente",
+    "Gracias, el lunes te confirmo cuántas unidades necesito"
+   ]
+  ]
+ },
+ {
+  "id": "p5",
+  "expected": "pendiente_seguimiento",
+  "chat": [
+   [
+    "cliente",
+    "Mi pedido no llegó y ya pasaron 5 días"
+   ],
+   [
+    "negocio",
+    "Lamento eso, voy a revisar con logística y te escribo"
+   ]
+  ]
+ },
+ {
+  "id": "p6",
+  "expected": "pendiente_seguimiento",
+  "chat": [
+   [
+    "cliente",
+    "¿Me hacen descuento si compro 10 unidades?"
+   ],
+   [
+    "negocio",
+    "Lo consulto con mi jefe y te respondo"
+   ]
+  ]
+ },
+ {
+  "id": "p7",
+  "expected": "pendiente_seguimiento",
+  "chat": [
+   [
+    "cliente",
+    "Me interesa el paquete de 3 sesiones"
+   ],
+   [
+    "negocio",
+    "Son 450 Bs"
+   ],
+   [
+    "cliente",
+    "Mañana te transfiero"
+   ],
+   [
+    "negocio",
+    "Ok, te espero"
+   ]
+  ]
+ },
+ {
+  "id": "r1",
+  "expected": "resuelta",
+  "chat": [
+   [
+    "cliente",
+    "¿A qué hora abren los sábados?"
+   ],
+   [
+    "negocio",
+    "De 9:00 a 13:00"
+   ],
+   [
+    "cliente",
+    "Gracias"
+   ]
+  ]
+ },
+ {
+  "id": "r2",
+  "expected": "resuelta",
+  "chat": [
+   [
+    "cliente",
+    "¿Dónde están ubicados?"
+   ],
+   [
+    "negocio",
+    "En la Av. Bolívar 45, frente a la plaza"
+   ],
+   [
+    "cliente",
+    "Perfecto, gracias"
+   ]
+  ]
+ },
+ {
+  "id": "r3",
+  "expected": "resuelta",
+  "chat": [
+   [
+    "cliente",
+    "Me cobraron doble en mi última factura"
+   ],
+   [
+    "negocio",
+    "Ya hicimos el reembolso, verás el crédito en 48 horas"
+   ],
+   [
+    "cliente",
+    "Ya lo veo reflejado, muchas gracias"
+   ]
+  ]
+ },
+ {
+  "id": "r4",
+  "expected": "resuelta",
+  "chat": [
+   [
+    "cliente",
+    "¿Aceptan pago con tarjeta?"
+   ],
+   [
+    "negocio",
+    "Sí, Visa y Mastercard"
+   ],
+   [
+    "cliente",
+    "Ok, muchas gracias"
+   ]
+  ]
+ },
+ {
+  "id": "r5",
+  "expected": "resuelta",
+  "chat": [
+   [
+    "cliente",
+    "No me abre la aplicación"
+   ],
+   [
+    "negocio",
+    "Pruebe desinstalarla y volver a instalarla"
+   ],
+   [
+    "cliente",
+    "Ya funcionó, gracias"
+   ]
+  ]
+ },
+ {
+  "id": "r6",
+  "expected": "resuelta",
+  "chat": [
+   [
+    "cliente",
+    "¿Hacen envíos a Cochabamba?"
+   ],
+   [
+    "negocio",
+    "Sí, cuesta 25 Bs"
+   ],
+   [
+    "cliente",
+    "Entendido, gracias por la información"
+   ]
+  ]
+ },
+ {
+  "id": "l1",
+  "expected": "perdida",
+  "chat": [
+   [
+    "negocio",
+    "El servicio completo cuesta 900 Bs"
+   ],
+   [
+    "cliente",
+    "Es muy caro, ya no me interesa"
+   ]
+  ]
+ },
+ {
+  "id": "l2",
+  "expected": "perdida",
+  "chat": [
+   [
+    "negocio",
+    "Te mando la propuesta final"
+   ],
+   [
+    "cliente",
+    "Encontré otra empresa más barata, gracias de todos modos"
+   ]
+  ]
+ },
+ {
+  "id": "l3",
+  "expected": "perdida",
+  "chat": [
+   [
+    "negocio",
+    "¿Pudo revisar la cotización?"
+   ],
+   [
+    "cliente",
+    "Ya no necesito el servicio, cancelen la cotización por favor"
+   ]
+  ]
+ },
+ {
+  "id": "l4",
+  "expected": "perdida",
+  "chat": [
+   [
+    "negocio",
+    "Hola, le escribo por la promoción de seguros"
+   ],
+   [
+    "cliente",
+    "No me interesa, por favor no me escriban más"
+   ]
+  ]
+ },
+ {
+  "id": "l5",
+  "expected": "perdida",
+  "chat": [
+   [
+    "cliente",
+    "¿Cuánto cuesta el curso de inglés?"
+   ],
+   [
+    "negocio",
+    "Son 400 Bs al mes"
+   ],
+   [
+    "cliente",
+    "Decidí no tomarlo, gracias"
+   ]
+  ]
+ },
+ {
+  "id": "t1",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "Quiero la torta de chocolate para el sábado"
+   ],
+   [
+    "negocio",
+    "Son 220 Bs con adelanto del 50%"
+   ],
+   [
+    "cliente",
+    "Listo, transferí 110 Bs"
+   ],
+   [
+    "negocio",
+    "Confirmado, te la entregamos el sábado a las 10:00"
+   ],
+   [
+    "cliente",
+    "Perfecto, ahí la espero"
+   ]
+  ]
+ },
+ {
+  "id": "t2",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "Me llevo las 2 camisas azules"
+   ],
+   [
+    "negocio",
+    "Genial, puedes recogerlas mañana a las 11:00"
+   ],
+   [
+    "cliente",
+    "Listo, mañana a las 11 voy y pago"
+   ]
+  ]
+ },
+ {
+  "id": "t3",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "Sí, contrato el internet de 100 Mb"
+   ],
+   [
+    "negocio",
+    "Perfecto, instalamos el jueves a las 9:00"
+   ],
+   [
+    "cliente",
+    "Ahí los espero, gracias"
+   ]
+  ]
+ },
+ {
+  "id": "t4",
+  "expected": "vendida",
+  "chat": [
+   [
+    "cliente",
+    "Pagué los 300 Bs del curso"
+   ],
+   [
+    "cliente",
+    "[imagen] comprobante"
+   ],
+   [
+    "negocio",
+    "Recibido, tu primera clase es el lunes a las 18:00"
+   ]
+  ]
+ },
+ {
+  "id": "t5",
+  "expected": "cita_agendada",
+  "chat": [
+   [
+    "cliente",
+    "Quiero ver el auto antes de decidir"
+   ],
+   [
+    "negocio",
+    "Puede venir el sábado a las 10:00"
+   ],
+   [
+    "cliente",
+    "Ahí estaré"
+   ]
+  ]
+ },
+ {
+  "id": "t6",
+  "expected": "pendiente_seguimiento",
+  "chat": [
+   [
+    "negocio",
+    "El total del sistema sería 900 Bs, ¿le parece?"
+   ],
+   [
+    "cliente",
+    "Déjame verlo y te confirmo el lunes"
+   ]
+  ]
+ }
 ]

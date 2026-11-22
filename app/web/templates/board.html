@@ -1,0 +1,20 @@
+{% extends "shell.html" %}
+{% block title %}Chats{% endblock %}
+{% block content %}
+<div class="sheet-in">
+  <div class="title-row">
+    <div>
+      <h1>Chats</h1>
+      <p class="sub" id="finding">{{ board.finding }}</p>
+    </div>
+    <div class="title-actions">
+      <button class="btn secondary small" id="analyze-all" type="button" title="Analiza ahora los chats pendientes, sin esperar {{ SILENCE_MINUTES }} minutos de silencio">Analizar ahora</button>
+      <button class="btn secondary small" id="refresh" type="button">Actualizar</button>
+      <a class="btn small" href="/connections/new">Conectar WhatsApp</a>
+    </div>
+  </div>
+  <div id="board-root">{% include "_board.html" %}</div>
+</div>
+<aside class="drawer" id="drawer" aria-label="Detalle de la conversación" aria-hidden="true"></aside>
+{% endblock %}
+{% block scripts %}<script src="/static/board.js" defer></script>{% endblock %}

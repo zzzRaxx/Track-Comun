@@ -1,17 +1,23 @@
-{% extends "base.html" %}
+{% extends "shell.html" %}
 {% block title %}Conectar WhatsApp{% endblock %}
 {% block content %}
-<h1>Conectar WhatsApp</h1>
-<p class="lead">Escribe el número que quieres conectar. En el siguiente paso verás el código para vincularlo.</p>
-<form class="card" method="post" action="/connections">
-  {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
-  <label for="phone">Número de WhatsApp</label>
-  <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="59170000001" value="{{ phone }}" required>
-  <p class="hint">Con el código de país y sin el signo +. Por ejemplo, 591 para Bolivia.</p>
-  <p class="notice" style="margin-top:16px">
-    Esta conexión usa WhatsApp Web, que no es una vía oficial de Meta, y en casos raros WhatsApp puede limitar un número.
-    Solo leemos los chats: no enviamos mensajes. Si puedes, empieza con un número secundario.
-  </p>
-  <p style="margin:20px 0 0"><button class="btn" type="submit">Continuar</button> <a class="btn secondary" href="/">Cancelar</a></p>
-</form>
+<div class="sheet-in" style="max-width:640px">
+  <div class="title-row">
+    <div>
+      <h1>Conectar WhatsApp</h1>
+      <p class="sub">Escribe el número que quieres conectar. En el siguiente paso verás el código para vincularlo.</p>
+    </div>
+  </div>
+  <form class="card" method="post" action="/connections">
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <label for="phone" style="margin-top:0">Número de WhatsApp</label>
+    <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="59170000001" value="{{ phone }}" required>
+    <p class="hint">Con el código de país y sin el signo +. Por ejemplo, 591 para Bolivia.</p>
+    <p class="notice" style="margin-top:16px">
+      Esta conexión usa WhatsApp Web, que no es una vía oficial de Meta, y en casos raros WhatsApp puede limitar un número.
+      Solo leemos los chats: no enviamos mensajes. Si puedes, empieza con un número secundario.
+    </p>
+    <p style="margin:20px 0 0"><button class="btn" type="submit">Continuar</button> <a class="btn secondary" href="/numbers">Cancelar</a></p>
+  </form>
+</div>
 {% endblock %}

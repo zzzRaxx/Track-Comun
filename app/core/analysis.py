@@ -9,7 +9,7 @@ from sqlalchemy import or_, select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app import config, llm
-from app.db import Conversation, Message, now_utc, session_scope
+from app.db import Connection, Conversation, Message, now_utc, session_scope
 
 log = logging.getLogger(__name__)
 
@@ -39,12 +39,17 @@ def build_transcript(messages: list[Message], tz) -> str:
     return text
 
 
-def pending_ids(session: Session, silence_cutoff: datetime, limit: int = BATCH_SIZE) -> list[int]:
+def pending_ids(session: Session, silence_cutoff: datetime, limit: int = BATCH_SIZE,
+                account_id: Optional[int] = None) -> list[int]:
     """Conversaciones con mensajes nuevos desde el último análisis y con silencio suficiente."""
+    query = select(Conversation.id)
+    if account_id is not None:
+        query = query.join(Connection, Connection.id == Conversation.connection_id).where(Connection.account_id == account_id)
     return list(
         session.scalars(
-            select(Conversation.id)
+            query
             .where(
+                Conversation.ignored.is_(False),
                 Conversation.last_message_at.is_not(None),
                 Conversation.last_message_at <= silence_cutoff,
                 or_(
@@ -60,7 +65,7 @@ def pending_ids(session: Session, silence_cutoff: datetime, limit: int = BATCH_S
 
 def load_job(session: Session, conversation_id: int) -> Optional[Job]:
     conv = session.get(Conversation, conversation_id)
-    if conv is None:
+    if conv is None or conv.ignored:
         return None
     started = now_utc()  # los mensajes que lleguen después de este instante volverán a poner la conversación en cola
     messages = list(

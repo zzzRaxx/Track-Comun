@@ -36,6 +36,8 @@ def _get_or_create_conversation(session: Session, connection: Connection, msg: I
 def ingest_message(session: Session, connection: Connection, msg: IncomingMessage) -> bool:
     """Guarda el mensaje. Devuelve False si ya existía (entrega repetida del webhook)."""
     conv = _get_or_create_conversation(session, connection, msg)
+    if conv.ignored:  # chat personal: el mensaje se descarta sin guardarse
+        return False
     exists = session.scalar(
         select(Message.id).where(
             Message.conversation_id == conv.id, Message.wa_message_id == msg.wa_message_id

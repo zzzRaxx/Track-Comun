@@ -1,12 +1,13 @@
-{% extends "base.html" %}
+{% extends "shell.html" %}
 {% block title %}+{{ conn.phone }}{% endblock %}
 {% block content %}
-<div class="row">
+<div class="sheet-in">
+<div class="title-row">
   <div>
     <h1>+{{ conn.phone }}</h1>
-    <p class="lead">Vincula este número con WhatsApp.</p>
+    <p class="sub">Vincula este número con WhatsApp.</p>
   </div>
-  <a class="btn secondary" href="/">Volver</a>
+  <div class="title-actions"><a class="btn secondary small" href="/numbers">Volver</a></div>
 </div>
 
 <div id="panel" class="card" aria-live="polite">{% include "_panel.html" %}</div>
@@ -74,4 +75,5 @@
   setInterval(refreshQr, 25000);
 })();
 </script>
+</div>
 {% endblock %}

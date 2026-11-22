@@ -145,3 +145,13 @@ def test_transcripcion_larga_conserva_el_final(monkeypatch):
     msgs = [Message(direction="in", text=f"mensaje número {i}", sent_at=T0) for i in range(20)]
     text = analysis.build_transcript(msgs, ZoneInfo("UTC"))
     assert text.startswith("[...conversación recortada...]") and "número 19" in text and "número 0" not in text
+
+
+@pytest.mark.asyncio
+async def test_no_analiza_chats_personales(factory, connection):
+    seed(factory, connection, [msg("A", "Hola", T0)])
+    with session_scope(factory) as s:
+        s.scalar(select(Conversation)).ignored = True
+    fake = Fake()
+    assert await analysis.analysis_cycle(factory, fake) == 0 and fake.calls == []
+    assert await analysis.analyze_conversation(factory, 1, fake) is False

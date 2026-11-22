@@ -13,13 +13,17 @@ from sqlalchemy import (
     Text,
     UniqueConstraint,
     create_engine,
+    inspect,
+    text,
 )
+from sqlalchemy import false as sa_false
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, relationship, sessionmaker
 from sqlalchemy.types import TypeDecorator
 
 STATUSES = ("vendida", "cita_agendada", "pendiente_seguimiento", "resuelta", "perdida")
 CLOSED_STATUSES = ("vendida", "resuelta", "perdida")
+PERSONAL = "personal"  # chat que no es de negocio: no se guarda ni se analiza
 CONNECTION_STATES = ("creating", "qr", "connecting", "open", "closed")
 
 
@@ -98,6 +102,8 @@ class Conversation(Base):
     follow_up_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime)
     unanswered: Mapped[bool] = mapped_column(Boolean, default=False)
     done: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Chat personal marcado a mano: se descartan sus mensajes y no se analiza.
+    ignored: Mapped[bool] = mapped_column(Boolean, default=False, server_default=sa_false())
     last_message_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime)
     last_analyzed_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime)
     last_reminded_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime)
@@ -157,6 +163,16 @@ def make_engine(url: str) -> Engine:
 
 def init_db(engine: Engine) -> None:
     Base.metadata.create_all(engine)
+    _add_missing_columns(engine)
+
+
+def _add_missing_columns(engine: Engine) -> None:
+    """create_all no modifica tablas que ya existen: añade las columnas nuevas que falten."""
+    columns = {c["name"] for c in inspect(engine).get_columns("conversations")}
+    if "ignored" not in columns:
+        default = "0" if engine.dialect.name == "sqlite" else "FALSE"
+        with engine.begin() as conn:
+            conn.execute(text(f"ALTER TABLE conversations ADD COLUMN ignored BOOLEAN NOT NULL DEFAULT {default}"))
 
 
 def make_session_factory(engine: Engine) -> sessionmaker[Session]:

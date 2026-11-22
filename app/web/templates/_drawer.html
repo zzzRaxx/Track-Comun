@@ -1,0 +1,59 @@
+<header class="drawer-head">
+  <div>
+    <h2>{{ c.name }}</h2>
+    <p class="muted">{{ c.phone or "Contacto sin número visible" }}{% if c.last_ago and c.column != "personal" %} · último mensaje {{ c.last_ago }}{% endif %}</p>
+  </div>
+  <button class="x" type="button" data-close aria-label="Cerrar">×</button>
+</header>
+
+{% if c.column == "personal" %}
+<div class="drawer-body">
+  <p><strong>Chat personal.</strong></p>
+  <p class="muted" style="margin-top:6px">No se guardan sus mensajes ni se envían a la IA. Si lo incluyes de nuevo, empezará como un chat nuevo con los próximos mensajes.</p>
+</div>
+<footer class="drawer-foot">
+  {% if c.chat_url %}<a class="btn secondary small" href="{{ c.chat_url }}" target="_blank" rel="noopener noreferrer">Ir al chat en WhatsApp</a>{% else %}<span></span>{% endif %}
+  <button class="btn small" type="button" data-include>Volver a incluir</button>
+</footer>
+{% else %}
+<div class="drawer-body">
+  <p class="muted">Mover a</p>
+  <div class="seg" role="group" aria-label="Estado de la conversación">
+    {% for s in STATUSES %}
+    <button type="button" data-set="{{ s }}" data-status="{{ s }}" aria-pressed="{{ 'true' if (c.confirmed and current == s) else 'false' }}">
+      <span class="dot"></span>{{ STATUS_LABELS[s] }}{% if c.suggested == s and not c.confirmed %} <span class="ia">· sugerido</span>{% endif %}
+    </button>
+    {% endfor %}
+    <button type="button" data-set="personal" class="personal-btn" title="Borra los mensajes guardados y deja de guardar este chat">Personal (ignorar)</button>
+  </div>
+  {% if not c.confirmed and c.suggested %}
+  <p class="hint">La IA sugiere «{{ c.suggested_label }}». Elige un estado para confirmarlo.</p>
+  {% elif not c.confirmed %}
+  <p class="hint">Aún no se analizó. Ocurre solo tras {{ SILENCE_MINUTES }} minutos sin mensajes nuevos, o puedes pedirlo con «Analizar ahora».</p>
+  {% endif %}
+
+  <dl class="facts">
+    <dt>Resumen</dt><dd>{{ c.summary or "—" }}</dd>
+    <dt>Siguiente acción</dt><dd>{{ c.next_action or "—" }}</dd>
+    <dt>{{ "Cita" if c.column == "cita_agendada" else ("Entrega" if c.column == "vendida" else "Seguimiento") }}</dt><dd{% if c.overdue %} style="color:var(--negative)"{% endif %}>{{ c.follow_up or "—" }}{% if c.overdue %} (vencido){% endif %}</dd>
+    <dt>Monto</dt><dd class="num">{{ c.amount or "—" }}</dd>
+  </dl>
+
+  <h2 style="margin-top:22px">Conversación</h2>
+  <div class="thread">
+    {% for m in messages %}
+    <div class="m{{ ' mine' if m.mine }}">{{ m.text }}<span class="t">{{ "Tú" if m.mine else "Cliente" }} · {{ m.at }}</span></div>
+    {% else %}
+    <p class="muted">Sin mensajes guardados.</p>
+    {% endfor %}
+  </div>
+</div>
+<footer class="drawer-foot">
+  {% if c.chat_url %}
+  <a class="btn small" href="{{ c.chat_url }}" target="_blank" rel="noopener noreferrer">Ir al chat en WhatsApp</a>
+  {% else %}
+  <span class="hint">Sin número visible: WhatsApp no permite abrir este contacto desde aquí.</span>
+  {% endif %}
+  <button class="btn secondary small" type="button" data-analyze>Analizar ahora</button>
+</footer>
+{% endif %}

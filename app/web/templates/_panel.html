@@ -2,7 +2,7 @@
   <div>
     <span class="badge {{ conn.state }}">{{ STATE_LABELS[conn.state] }}</span>
     {% if conn.state == "open" %}
-    <p style="margin:12px 0 0">Listo. Los mensajes de este número ya se guardan. <a href="/">Ir a mis números</a></p>
+    <p style="margin:12px 0 0">Listo. Los mensajes de este número ya se guardan. <a href="/">Ir a mis chats</a></p>
     {% elif conn.state == "closed" %}
     <p class="muted" style="margin:12px 0 0">Este número está desconectado. Vincúlalo de nuevo con el código de abajo.</p>
     {% else %}

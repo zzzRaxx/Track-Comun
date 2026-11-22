@@ -1,0 +1,58 @@
+<div id="board-data" data-finding="{{ board.finding }}" hidden></div>
+{% if board.total == 0 %}
+<div class="empty-state">
+  {% if has_numbers %}
+  <strong>Todavía no hay conversaciones.</strong>
+  <p>Cuando alguien escriba o le respondas desde tu WhatsApp, su chat aparecerá aquí y se clasificará solo tras {{ SILENCE_MINUTES }} minutos sin mensajes. Los chats personales los puedes marcar con «Mover → Personal» y dejan de guardarse.</p>
+  <a class="btn secondary" href="/numbers">Ver mis números</a>
+  {% else %}
+  <strong>Conecta tu primer número.</strong>
+  <p>Vincúlalo con un código, igual que «Dispositivos vinculados» en WhatsApp. Sigues usando WhatsApp en tu teléfono sin cambios.</p>
+  <a class="btn" href="/connections/new">Conectar WhatsApp</a>
+  {% endif %}
+</div>
+{% else %}
+<nav class="strip" aria-label="Resumen por estado">
+  {% for col in board.columns if col.key != "personal" %}
+  <a href="#lane-{{ col.key }}" data-status="{{ col.key }}" data-jump="{{ col.key }}">
+    <span class="k"><span class="dot{{ ' hollow' if col.key == 'sin_clasificar' }}"></span>{{ col.label }}</span>
+    <span class="v">{{ col.total }}</span>
+    <span class="s">
+      {%- if col.key == "vendida" and board.sales_text %}{{ board.sales_text }}
+      {%- elif col.key == "pendiente_seguimiento" %}{% set w = col.cards | selectattr("unanswered") | list | length %}{% if w %}{{ w }} {{ 'espera respuesta' if w == 1 else 'esperan respuesta' }}{% endif %}
+      {%- endif -%}
+    </span>
+  </a>
+  {% endfor %}
+</nav>
+
+<div class="board" id="board">
+  {% for col in board.columns %}
+  <section class="lane" id="lane-{{ col.key }}" data-status="{{ col.key }}" aria-label="{{ col.label }}">
+    <header class="lane-head" title="{{ col.hint }}">
+      <span class="dot{{ ' hollow' if col.key == 'sin_clasificar' }}"></span>
+      <h2>{{ col.label }}</h2>
+      <span class="n">{{ col.total }}</span>
+    </header>
+    <div class="lane-body">
+      {% for c in col.cards %}{% include "_card.html" %}{% endfor %}
+      {% if not col.cards %}
+        <p class="lane-empty">
+          {%- if col.key == "sin_clasificar" %}Los chats nuevos entran aquí y se clasifican tras {{ SILENCE_MINUTES }} min sin mensajes
+          {%- elif col.key == "personal" %}Aquí van los chats que no son de negocio: no se guardan ni se envían a la IA
+          {%- else %}Nada por aquí{% endif -%}
+        </p>
+      {% endif %}
+      {% if col.hidden %}<p class="lane-more">y {{ col.hidden }} más</p>{% endif %}
+      {% if col.key == "personal" %}
+      <form class="ignore-form" data-ignore-form>
+        <label for="ignore-phone" class="sr">Número a ignorar</label>
+        <input id="ignore-phone" name="phone" type="tel" inputmode="tel" placeholder="Número a ignorar, ej. 59170000001" autocomplete="off">
+        <button class="btn secondary small" type="submit">Ignorar número</button>
+      </form>
+      {% endif %}
+    </div>
+  </section>
+  {% endfor %}
+</div>
+{% endif %}
